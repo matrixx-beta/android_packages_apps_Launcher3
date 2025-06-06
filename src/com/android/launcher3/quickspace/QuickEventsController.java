@@ -25,7 +25,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
@@ -56,7 +55,6 @@ import com.android.launcher3.util.MSMHProxy;
 
 public class QuickEventsController {
 
-    private static final String SETTING_DEVICE_INTRO_COMPLETED = "device_introduction_completed";
     private final Context mContext;
     private final Resources mResources;
 
@@ -69,10 +67,6 @@ public class QuickEventsController {
 
     private boolean mIsQuickEvent = false;
     private boolean mRegistered = false;
-
-    // Device Intro
-    private boolean mIsFirstTimeDone = false;
-    private SharedPreferences mPreferences;
 
     // PSA + Personality
     private String[] mPSAStr;
@@ -96,8 +90,6 @@ public class QuickEventsController {
     }
 
     public void initQuickEvents() {
-        mPreferences = mContext.getSharedPreferences(LauncherFiles.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
-        mIsFirstTimeDone = mPreferences.getBoolean(SETTING_DEVICE_INTRO_COMPLETED, false);
         registerPSAListener();
         updateQuickEvents();
     }
@@ -120,6 +112,7 @@ public class QuickEventsController {
 
     public void updateQuickEvents() {
         if (!mRegistered) return;
+<<<<<<< HEAD
         if (mIsFirstTimeDone) {
             nowPlayingEvent();
             initNowPlayingEvent();
@@ -160,6 +153,11 @@ public class QuickEventsController {
                 mIsQuickEvent = false;
             }
         };
+=======
+        nowPlayingEvent();
+        initNowPlayingEvent();
+        psonalityEvent();
+>>>>>>> 24961a8bf1 (Launcher3: Quickspace: Remove introduction logic)
     }
 
     private void nowPlayingEvent() {
@@ -294,10 +292,6 @@ public class QuickEventsController {
 
     public boolean isQuickEvent() {
         return mIsQuickEvent;
-    }
-
-    public boolean isDeviceIntroCompleted() {
-        return mIsFirstTimeDone;
     }
 
     public String getTitle() {
